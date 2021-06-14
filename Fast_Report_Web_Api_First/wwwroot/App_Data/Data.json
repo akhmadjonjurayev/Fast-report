@@ -1,0 +1,9 @@
+{
+  "Id": 1,
+  "firstName": "name 1",
+  "lastName": "name 2",
+  "birthday": "12/02/2021",
+  "address": "address 1",
+  "phone": "909009090",
+  "picture": null
+}

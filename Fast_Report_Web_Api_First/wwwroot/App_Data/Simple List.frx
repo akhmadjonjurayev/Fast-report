@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" TextQuality="Regular" ReportInfo.Name="Simple List" ReportInfo.Author="Fast Reports Inc" ReportInfo.Description="Demonstrates a simple list report. To create it:&#13;&#10;- go to &quot;Data&quot; menu and select &quot;Choose Report Data...&quot; item to select a datasource;&#13;&#10;- go to &quot;Report|Configure Bands...&quot; menu to create the band structure;&#13;&#10;- return to the report page, doubleclick the data band to show its editor;&#13;&#10;- choose the datasource;&#13;&#10;- drag data from the Data Dictionary window to the band." ReportInfo.Created="01/17/2008 03:05:57" ReportInfo.Modified="06/14/2021 12:31:04" ReportInfo.CreatorVersion="2021.3.6.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+    private void Chart_BeforePrint(object sender, EventArgs e)
+    {
+      
+    }
+
+    private void Table1_AfterData(object sender, EventArgs e)
+    {
+      
+    }
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <JsonDataSourceConnection Name="Connection" ConnectionString="rijcmlq2+PJxoIT7htBT4hAqKdGgEy403kXPVGU58PXF1t1OAAbdqe9BU4siM416T8pEYfP">
+      <JsonTableDataSource Name="JSON" DataType="FastReport.Data.JsonConnection.JsonParser.JsonArray" Enabled="true" TableName="JSON">
+        <Column Name="id" DataType="System.Int32" PropName="index"/>
+        <Column Name="firstName" DataType="System.String" PropName="Column" Calculated="true" Expression=""/>
+        <Column Name="lastName" DataType="System.String" PropName="Column" Calculated="true" Expression=""/>
+        <Column Name="birthday" DataType="System.DateTime" PropName="Column" Calculated="true" Expression=""/>
+        <Column Name="address" DataType="System.String" PropName="Column" Calculated="true" Expression=""/>
+        <Column Name="phone" DataType="System.String" PropName="Column" Calculated="true" Expression=""/>
+        <Column Name="picture" DataType="System.Byte[]" PropName="Column" Calculated="true" Expression=""/>
+      </JsonTableDataSource>
+    </JsonDataSourceConnection>
+  </Dictionary>
+  <ReportPage Name="Page2" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle2" Width="718.2"/>
+    <PageHeaderBand Name="PageHeader1" Top="4" Width="718.2"/>
+    <DataBand Name="Data2" Top="8" Width="718.2" Height="1644.3" Border.Lines="All" CanGrow="true" CanShrink="true" Guides="0">
+      <TextObject Name="lastName" Left="378" Top="56.7" Width="113.4" Height="28.35" Text="[person.lastName]" Font="Arial, 10pt"/>
+      <TextObject Name="address" Left="378" Top="113.4" Width="113.4" Height="28.35" Text="[person.address]" Font="Arial, 9.75pt, style=Bold, Italic"/>
+      <TextObject Name="Text22" Left="18.9" Width="122.85" Height="28.35" Text="FirstName" Font="Arial, 10pt"/>
+      <TextObject Name="Text23" Left="18.9" Top="56.7" Width="122.85" Height="28.35" Text="LastName" Font="Arial, 10pt"/>
+      <TextObject Name="Text24" Left="18.9" Top="113.4" Width="122.85" Height="28.35" Text="Address" Font="Arial, 10pt"/>
+      <TextObject Name="Text25" Left="18.9" Top="170.1" Width="122.85" Height="28.35" Text="PhoneNumber" Font="Arial, 10pt"/>
+      <TextObject Name="phone" Left="378" Top="170.1" Width="113.4" Height="28.35" Text="[person.phone]" Font="Arial, 10pt"/>
+      <BarcodeObject Name="Barcode1" Left="18.9" Top="236.25" Width="116" Height="116" Text="[person.QrCode]" ShowText="false" AllowExpressions="true" Brackets="" Barcode="QR Code" Barcode.ErrorCorrection="L" Barcode.Encoding="UTF8" Barcode.QuietZone="true"/>
+      <TextObject Name="Text28" Left="378" Width="113.4" Height="28.35" Text="[person.firstName]" Font="Arial, 10pt"/>
+      <MSChartObject Name="MsChart1" Left="264.6" Top="245.7" Width="378" Height="245.7" BeforePrintEvent="Chart_BeforePrint" Filter="" AutoSeriesColumn="" AutoSeriesColor="" ChartData="PENoYXJ0IFBhbGV0dGU9IlNlbWlUcmFuc3BhcmVudCIgQmFja0NvbG9yPSJXaGl0ZVNtb2tlIiBTaXplPSIyODgsIDIzMiIgQmFja0dyYWRpZW50U3R5bGU9IkRpYWdvbmFsUmlnaHQiIEJvcmRlcmxpbmVDb2xvcj0iSW5kaWFuUmVkIiBCb3JkZXJsaW5lV2lkdGg9IjIiIEJvcmRlcmxpbmVEYXNoU3R5bGU9IlNvbGlkIj4NCiAgPFNlcmllcz4NCiAgICA8U2VyaWVzIE5hbWU9IlNlcmllczEiIExlZ2VuZD0iRGVmYXVsdCIgWFZhbHVlVHlwZT0iU3RyaW5nIiBZVmFsdWVUeXBlPSJEb3VibGUiIENoYXJ0QXJlYT0iRGVmYXVsdCI+DQogICAgICA8UG9pbnRzPg0KICAgICAgICA8RGF0YVBvaW50IFlWYWx1ZXM9IjEiIEF4aXNMYWJlbD0iQSIgLz4NCiAgICAgICAgPERhdGFQb2ludCBZVmFsdWVzPSIzIiBBeGlzTGFiZWw9IkIiIC8+DQogICAgICAgIDxEYXRhUG9pbnQgWVZhbHVlcz0iMiIgQXhpc0xhYmVsPSJDIiAvPg0KICAgICAgICA8RGF0YVBvaW50IFlWYWx1ZXM9IjQiIEF4aXNMYWJlbD0iRCIgLz4NCiAgICAgIDwvUG9pbnRzPg0KICAgIDwvU2VyaWVzPg0KICA8L1Nlcmllcz4NCiAgPExlZ2VuZHM+DQogICAgPExlZ2VuZCBOYW1lPSJEZWZhdWx0Ij4NCiAgICA8L0xlZ2VuZD4NCiAgPC9MZWdlbmRzPg0KICA8VGl0bGVzPg0KICAgIDxUaXRsZSBOYW1lPSJUaXRsZTEiIFZpc2libGU9IkZhbHNlIiBJc0RvY2tlZEluc2lkZUNoYXJ0QXJlYT0iRmFsc2UiIEFsaWdubWVudD0iVG9wQ2VudGVyIj4NCiAgICA8L1RpdGxlPg0KICA8L1RpdGxlcz4NCiAgPENoYXJ0QXJlYXM+DQogICAgPENoYXJ0QXJlYSBOYW1lPSJEZWZhdWx0Ij4NCiAgICAgIDxBeGlzWT4NCiAgICAgICAgPE1ham9yR3JpZCBMaW5lQ29sb3I9IjY0LCA2NCwgNjQsIDY0IiAvPg0KICAgICAgPC9BeGlzWT4NCiAgICAgIDxBeGlzWD4NCiAgICAgICAgPE1ham9yR3JpZCBMaW5lQ29sb3I9IjY0LCA2NCwgNjQsIDY0IiAvPg0KICAgICAgPC9BeGlzWD4NCiAgICAgIDxBeGlzWDIgTGluZUNvbG9yPSJEaW1HcmF5IiBMaW5lV2lkdGg9IjUiPg0KICAgICAgICA8TWFqb3JHcmlkIExpbmVDb2xvcj0iNjQsIDY0LCA2NCwgNjQiIC8+DQogICAgICA8L0F4aXNYMj4NCiAgICAgIDxBeGlzWTI+DQogICAgICAgIDxNYWpvckdyaWQgTGluZUNvbG9yPSI2NCwgNjQsIDY0LCA2NCIgLz4NCiAgICAgIDwvQXhpc1kyPg0KICAgIDwvQ2hhcnRBcmVhPg0KICA8L0NoYXJ0QXJlYXM+DQogIDxCb3JkZXJTa2luIFNraW5TdHlsZT0iRW1ib3NzIiAvPg0KPC9DaGFydD4=">
+        <MSChartSeries Name="Series2"/>
+      </MSChartObject>
+      <HtmlObject Name="Html1" Left="18.9" Top="500.85" Width="378" Height="56.7" Text="[person.html]"/>
+      <TextObject Name="Text29" Left="415.8" Top="708.75" Width="113.4" Height="28.35" Text="[person.lastName]" Font="Arial, 10pt"/>
+      <TextObject Name="Text30" Left="415.8" Top="765.45" Width="113.4" Height="28.35" Text="[person.address]" Font="Arial, 9.75pt, style=Bold, Italic"/>
+      <TextObject Name="Text31" Left="56.7" Top="661.5" Width="122.85" Height="28.35" Text="FirstName" Font="Arial, 10pt"/>
+      <TextObject Name="Text32" Left="56.7" Top="708.75" Width="122.85" Height="28.35" Text="LastName" Font="Arial, 10pt"/>
+      <TextObject Name="Text33" Left="56.7" Top="765.45" Width="122.85" Height="28.35" Text="Address" Font="Arial, 10pt"/>
+      <TextObject Name="Text34" Left="56.7" Top="822.15" Width="122.85" Height="28.35" Text="PhoneNumber" Font="Arial, 10pt"/>
+      <TextObject Name="Text35" Left="415.8" Top="822.15" Width="113.4" Height="28.35" Text="[person.phone]" Font="Arial, 10pt"/>
+      <TextObject Name="Text36" Left="415.8" Top="661.5" Width="113.4" Height="28.35" Text="[person.firstName]" Font="Arial, 10pt"/>
+      <TextObject Name="Text27" Left="47.25" Top="973.35" Width="151.2" Height="47.25" Text="Emploee" Font="Times New Roman, 20.25pt, style=Bold"/>
+      <PictureObject Name="picture" Left="311.85" Top="869.4" Width="283.5" Height="302.4" DataColumn="person.picture"/>
+      <TableObject Name="Table1" Left="66.15" Top="1360.8" Width="567" Height="236.25" Border.Lines="All">
+        <TableColumn Name="Column1" Width="113.4"/>
+        <TableColumn Name="Column2" Width="113.4"/>
+        <TableColumn Name="Column3" Width="113.4"/>
+        <TableColumn Name="Column4" Width="113.4"/>
+        <TableColumn Name="Column5" Width="113.4"/>
+        <TableRow Name="Row1" Height="47.25">
+          <TableCell Name="Cell1" Border.Lines="All" Text="Id" Padding="10, 10, 10, 10" Font="Arial, 10pt"/>
+          <TableCell Name="Cell2" Border.Lines="All" Text="FirstName" Font="Arial, 10pt"/>
+          <TableCell Name="Cell3" Border.Lines="All" Text="LastName" Font="Arial, 10pt"/>
+          <TableCell Name="Cell4" Border.Lines="All" Text="Address" Font="Arial, 10pt"/>
+          <TableCell Name="Cell5" Border.Lines="All" Text="Notification" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row2" Height="47.25">
+          <TableCell Name="Cell6" Border.Lines="All" Text="[person.id]" Font="Arial, 10pt"/>
+          <TableCell Name="Cell7" Border.Lines="All" Text="[person.firstName]" Font="Arial, 10pt"/>
+          <TableCell Name="Cell8" Border.Lines="All" Text="[person.lastName]" Font="Arial, 10pt"/>
+          <TableCell Name="Cell9" Border.Lines="All" Text="[person.address]" Font="Arial, 10pt"/>
+          <TableCell Name="Cell10" Border.Lines="All" Text="[person.phone]" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row3" Height="47.25">
+          <TableCell Name="Cell11" Font="Arial, 10pt"/>
+          <TableCell Name="Cell12" Font="Arial, 10pt"/>
+          <TableCell Name="Cell13" Font="Arial, 10pt"/>
+          <TableCell Name="Cell14" Font="Arial, 10pt"/>
+          <TableCell Name="Cell15" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row4" Height="47.25">
+          <TableCell Name="Cell16" Font="Arial, 10pt"/>
+          <TableCell Name="Cell17" Font="Arial, 10pt"/>
+          <TableCell Name="Cell18" Font="Arial, 10pt"/>
+          <TableCell Name="Cell19" Font="Arial, 10pt"/>
+          <TableCell Name="Cell20" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row5" Height="47.25">
+          <TableCell Name="Cell21" Font="Arial, 10pt"/>
+          <TableCell Name="Cell22" Font="Arial, 10pt"/>
+          <TableCell Name="Cell23" Font="Arial, 10pt"/>
+          <TableCell Name="Cell24" Font="Arial, 10pt"/>
+          <TableCell Name="Cell25" Font="Arial, 10pt"/>
+        </TableRow>
+      </TableObject>
+    </DataBand>
+    <PageFooterBand Name="PageFooter2" Top="1656.3" Width="718.2"/>
+  </ReportPage>
+</Report>

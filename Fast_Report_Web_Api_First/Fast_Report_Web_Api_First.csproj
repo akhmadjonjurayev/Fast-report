@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FastReport.Data.Json" Version="2020.4.5" />
+    <PackageReference Include="FastReport.Net.Demo" Version="2021.1.20" />
+    <PackageReference Include="FastReport.OpenSource" Version="2020.3.1" />
+    <PackageReference Include="FastReport.OpenSource.Data.Json" Version="2020.3.1" />
+    <PackageReference Include="FastReport.OpenSource.Export.PdfSimple" Version="2020.3.1" />
+    <PackageReference Include="FastReport.OpenSource.Web" Version="2020.3.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.0" />
+  </ItemGroup>
+
+
+</Project>
