@@ -56,8 +56,17 @@ namespace Fast_Report_Web_Api_First.Controllers
                         Config.WebMode = true;
                         using (var report = new Report())
                         {
+                            ReportPage page = new ReportPage();
+                            page.CreateUniqueName();
+                            page.TopMargin = 10.0f;
+                            page.LeftMargin = 10.0f;
+                            page.RightMargin = 10.0f;
+                            page.BottomMargin = 10.0f;
+                            page.Border.Lines = BorderLines.All;
+                            report.Pages.Add(page);
+                           
                             report.Load(reportPath);
-                            report.RegisterData(dataSet);
+                           // report.RegisterData(dataSet);
                             report.Dictionary.RegisterData(Person(), "person", true);
                             PDFExport pdf = new PDFExport
                             {
@@ -65,7 +74,11 @@ namespace Fast_Report_Web_Api_First.Controllers
                                 AllowPrint = true,
                                 Author = "germes.lc",
                             };
-                            RTFExport word = new RTFExport()
+                            //RTFExport word = new RTFExport()
+                            //{
+                            //    AllowOpenAfter = true
+                            //};
+                            FastReport.Export.OoXML.Word2007Export word = new FastReport.Export.OoXML.Word2007Export()
                             {
                                 AllowOpenAfter = true
                             };
@@ -73,19 +86,21 @@ namespace Fast_Report_Web_Api_First.Controllers
                             {
                                 
                             };
-                            BarcodeObject bc = report.FindObject("Barcode1") as BarcodeObject;
+                            
+                            BarcodeObject bc = report.FindObject("Barcode2") as BarcodeObject;
                             bc.Text = Guid.NewGuid().ToString();
                             MSChartObject chart = report.FindObject("MSChart1") as MSChartObject;
                             ChartDraw(chart);
                             var table11 = report.FindObject("Table1");
                             TableObject table = report.FindObject("Table1") as TableObject;
+                            
                             CreateTable(table);
                             report.Prepare();
                             report.Export(word, stream);
                             var word_mime = "application/msword";
                             var pdf_mime = "application/pdf";
                             var excel_mime = "application/vnd.ms-excel";
-                            return File(stream.ToArray(), word_mime);
+                            return File(stream.ToArray(), word_mime, "report.docx");
                         }
                     }
                 }
@@ -100,25 +115,19 @@ namespace Fast_Report_Web_Api_First.Controllers
             }
             return Ok(message);
         }
-        private void CreateTable(TableObject tableObject)
+        private void CreateTable(TableObject table)
         {
-            //tableObject.Delete();
-            var dataSet = new DataSet();
-            DataTable table = new DataTable();
-            table.Columns.Add("ID", typeof(int));
-            table.Columns.Add("Name", typeof(string));
-            table.Columns.Add("Address", typeof(string));
-            table.Columns.Add("Age", typeof(int));
-            table.Columns.Add("Birthday", typeof(DateTime));
-            for (int i = 1; i < 21; i++)
+            table.Name = "Table1";
+            table.RowCount = 10;
+            for (int i = 1; i < table.RowCount; i++)
             {
-                table.Rows.Add(i, "name" + i, "address" + i, i + 10, DateTime.Now.AddMonths(-i));
-            }
-            dataSet.Tables.Add(table);
-            tableObject.Border.Color = System.Drawing.Color.Red;
-            tableObject.Border.Lines = BorderLines.All;
-            tableObject.Border.Width = 2f;
-            
+                for (int j = 0; j < table.ColumnCount; j++)
+                {
+                    table[j, i].Text = (10 * i + j + 1).ToString();
+                    table[j, i].Border.Lines = BorderLines.All;
+                }
+                table.Rows[i].Height = 26;
+            }   
         }
         private void ChartDraw(MSChartObject MSChart1)
         {
@@ -197,7 +206,7 @@ namespace Fast_Report_Web_Api_First.Controllers
             var file = System.IO.File.ReadAllBytes(@"C:\Users\WebDeveloper\Pictures\Saved Pictures\20.jpg");
             return new List<Person>()
             { new Person() { Id = 1, firstName = "name 1", lastName = "name 2", birthday = DateTime.Now, address = "address 1", phone = "998909009090", picture = file,QrCode = Guid.NewGuid().ToString(),
-            html = "<h1 color='red'>Hello <b>World</b></h1>"} };
+            html = "<i><b>World</b></i>"} };
         }
         private List<Person> ForArrayList()
         {
