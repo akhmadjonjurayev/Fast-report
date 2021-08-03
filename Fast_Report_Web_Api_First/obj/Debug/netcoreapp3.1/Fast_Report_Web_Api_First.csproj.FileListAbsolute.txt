@@ -14,7 +14,6 @@ C:\Users\WebDeveloper\source\repos\Fast_Report_Web_Api_First\Fast_Report_Web_Api
 C:\Users\WebDeveloper\source\repos\Fast_Report_Web_Api_First\Fast_Report_Web_Api_First\bin\Debug\netcoreapp3.1\Microsoft.DotNet.PlatformAbstractions.dll
 C:\Users\WebDeveloper\source\repos\Fast_Report_Web_Api_First\Fast_Report_Web_Api_First\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyModel.dll
 C:\Users\WebDeveloper\source\repos\Fast_Report_Web_Api_First\Fast_Report_Web_Api_First\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
-C:\Users\WebDeveloper\source\repos\Fast_Report_Web_Api_First\Fast_Report_Web_Api_First\obj\Debug\netcoreapp3.1\Fast_Report_Web_Api_First.csprojAssemblyReference.cache
 C:\Users\WebDeveloper\source\repos\Fast_Report_Web_Api_First\Fast_Report_Web_Api_First\obj\Debug\netcoreapp3.1\Fast_Report_Web_Api_First.AssemblyInfoInputs.cache
 C:\Users\WebDeveloper\source\repos\Fast_Report_Web_Api_First\Fast_Report_Web_Api_First\obj\Debug\netcoreapp3.1\Fast_Report_Web_Api_First.AssemblyInfo.cs
 C:\Users\WebDeveloper\source\repos\Fast_Report_Web_Api_First\Fast_Report_Web_Api_First\obj\Debug\netcoreapp3.1\Fast_Report_Web_Api_First.csproj.CoreCompileInputs.cache
@@ -109,3 +108,4 @@ C:\Users\WebDeveloper\source\repos\Fast_Report_Web_Api_First\Fast_Report_Web_Api
 C:\Users\WebDeveloper\source\repos\Fast_Report_Web_Api_First\Fast_Report_Web_Api_First\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
 C:\Users\WebDeveloper\source\repos\Fast_Report_Web_Api_First\Fast_Report_Web_Api_First\bin\Debug\netcoreapp3.1\Npgsql.dll
 C:\Users\WebDeveloper\source\repos\Fast_Report_Web_Api_First\Fast_Report_Web_Api_First\bin\Debug\netcoreapp3.1\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\WebDeveloper\source\repos\Fast_Report_Web_Api_First\Fast_Report_Web_Api_First\obj\Debug\netcoreapp3.1\Fast_Report_Web_Api_First.csprojAssemblyReference.cache

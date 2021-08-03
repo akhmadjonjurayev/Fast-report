@@ -1,4 +1,4 @@
-п»їusing Fast_Report_Web_Api_First.Model;
+using Fast_Report_Web_Api_First.Model;
 using FastReport;
 using FastReport.Barcode;
 using FastReport.Data;
@@ -39,6 +39,76 @@ namespace Fast_Report_Web_Api_First.Controllers
         {
             _hostingEnvironment = hostingEnvironment;
         }
+
+        [HttpGet("GetResolution")]
+        [Obsolete]
+        public IActionResult CreateResolution()
+        {
+            try
+            {
+                using(var stream = new MemoryStream())
+                {
+                    RegisteredObjects.AddConnection(typeof(JsonDataConnection));
+                    string webRootPath = _hostingEnvironment.WebRootPath;
+                    string reportPath = (webRootPath + @"\App_Data\" + "Resolution.frx");
+                    Config.WebMode = true;
+                    using(var report = new Report())
+                    {
+                        ReportPage page = new ReportPage();
+                        page.CreateUniqueName();
+                        page.TopMargin = 10.0f;
+                        page.LeftMargin = 10.0f;
+                        page.RightMargin = 10.0f;
+                        page.BottomMargin = 10.0f;
+                        page.Border.Lines = BorderLines.All;
+                        report.Pages.Add(page);
+
+                        report.Load(reportPath);
+
+
+                        string dbName = "ControlPoints";
+                        string dataBandName = "ControlPointsDataBand";
+                        report.RegisterData(GetData(), dbName);
+                        DataSourceBase dsb = report.GetDataSource(dbName);
+                        dsb.Enabled = true;
+                        (report.FindObject(dataBandName) as DataBand).DataSource = dsb;
+
+                        report.Dictionary.RegisterData(GetResolution(), "Resolution", true);
+                        PDFExport pdf = new PDFExport
+                        {
+                            AllowCopy = true,
+                            AllowPrint = true,
+                            Author = "germes.lc",
+                        };
+                        report.Prepare();
+                        report.Export(pdf, stream);
+                        var pdf_mime = "application/pdf";
+                        return File(stream.ToArray(), pdf_mime, "report.pdf");
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                return Ok(ex.Message);
+            }
+        }
+
+        private DataTable GetData()
+        {
+            DataTable resultData = new DataTable();
+            resultData.Columns.Add("Persons", typeof(string));
+            resultData.Columns.Add("Message", typeof(string));
+            resultData.Columns.Add("Control", typeof(string));
+            resultData.Columns.Add("DeadLine", typeof(DateTime));
+            resultData.Rows.Add("<b>Баходиров А.А</b>,Каюмов Т.А", "В срочном порятке подготовить отчет в текстовом и в табличной форме для доклада !", "Баходиров А.А", DateTime.Now);
+            resultData.Rows.Add("<b>Каюмов Т.А</b>, Баходиров А.А", "Прошу обеспечить ознакомление каждого сотрутника компании под роспись с содержанием данного документа !", "Баходиров А.А", DateTime.Now.AddDays(1));
+            //for(int i = 3; i <= 10; i++)
+            //{
+            //    resultData.Rows.Add("MyPersons" + i, "MyMessage" + i, "ControllerName" + i, DateTime.Now.AddDays(i));
+            //}
+            return resultData;
+        }
+
         [HttpGet("getPdf")]
         [Obsolete]
         public IActionResult GetPdf()
@@ -67,7 +137,7 @@ namespace Fast_Report_Web_Api_First.Controllers
                            
                             report.Load(reportPath);
                            // report.RegisterData(dataSet);
-                            report.Dictionary.RegisterData(Person(), "person", true);
+                            report.Dictionary.RegisterData(Person(), "Person", true);
                             PDFExport pdf = new PDFExport
                             {
                                 AllowCopy = true,
@@ -203,10 +273,12 @@ namespace Fast_Report_Web_Api_First.Controllers
         }
         private List<Person> Person()
         {
-            var file = System.IO.File.ReadAllBytes(@"C:\Users\WebDeveloper\Pictures\Saved Pictures\20.jpg");
+            var file = System.IO.File.ReadAllBytes(@"C:\Users\WebDeveloper\Desktop\gerb.png");
             return new List<Person>()
             { new Person() { Id = 1, firstName = "name 1", lastName = "name 2", birthday = DateTime.Now, address = "address 1", phone = "998909009090", picture = file,QrCode = Guid.NewGuid().ToString(),
-            html = "<i><b>World</b></i>"} };
+            html = "<i><b>World</b></i>"} ,
+            new Person() { Id = 2, firstName = "name 2", lastName = "name 3", birthday = DateTime.Now, address = "address 2", phone = "998919109090", picture = file,QrCode = Guid.NewGuid().ToString(),
+            html = "<i><b>Hello World</b></i>"}};
         }
         private List<Person> ForArrayList()
         {
@@ -216,6 +288,52 @@ namespace Fast_Report_Web_Api_First.Controllers
                 new Person(){Id = 3},
                 new Person(){Id = 4},
                 new Person(){Id = 2}
+            };
+        }
+        private List<Resolution> GetResolution()
+        {
+            return new List<Resolution>()
+            {
+                new Resolution()
+                {
+                     Director = "Анвар А.А",
+                     DateTimeNow = DateTime.Now,
+                     Company = "BAIK Germes",
+                     FullCompanyName = "OOO \"BAIK TEXNOLOGIES\""
+                }
+            };
+        }
+        private List<ResolutionPerson> GetResolutionPerson()
+        {
+            return new List<ResolutionPerson>()
+            {
+                new ResolutionPerson()
+                {
+                Message = "В срочном порятке подготовить отчет в текстовом и в табличной форме для доклада !",
+                Persons = "<b>Баходиров А.А</b>,Каюмов Т.А",
+                Control = "Баходиров А.А",
+                DeadLine = DateTime.Now.AddDays(2)
+                },
+                new ResolutionPerson()
+                {
+                    Message = "Прошу обеспечить ознакомление каждого сотрутника компании под роспись с содержанием данного документа !",
+                    Persons = "<b>Каюмов Т.А</b>, Баходиров А.А",
+                    Control = "Баходиров А.А",
+                    DeadLine = DateTime.Now.AddDays(3)
+                }
+            };
+        }
+        private List<ResolutionPerson> GetResolutionPeople()
+        {
+            return new List<ResolutionPerson>()
+            {
+                new ResolutionPerson()
+                {
+                    Message = "Прошу обеспечить ознакомление каждого сотрутника компании под роспись с содержанием данного документа !",
+                    Persons = "<b>Каюмов Т.А</b>, Баходиров А.А",
+                    Control = "Баходиров А.А",
+                    DeadLine = DateTime.Now.AddDays(3)
+                }
             };
         }
     }
