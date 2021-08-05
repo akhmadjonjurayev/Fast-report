@@ -3,27 +3,18 @@ using FastReport;
 using FastReport.Barcode;
 using FastReport.Data;
 using FastReport.DataVisualization.Charting;
-using FastReport.Export.Html;
-using FastReport.Export.Image;
-using FastReport.Export.Pdf;
-using FastReport.Export.RichText;
+using FastReport.Export.PdfSimple;
 using FastReport.MSChart;
 using FastReport.Table;
 using FastReport.Utils;
-using FastReport.Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Fast_Report_Web_Api_First.Controllers
 {
@@ -44,13 +35,18 @@ namespace Fast_Report_Web_Api_First.Controllers
         [Obsolete]
         public IActionResult CreateResolution()
         {
+            string url = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            string url1 = System.AppDomain.CurrentDomain.BaseDirectory;
+            string url2 = System.Environment.CurrentDirectory;
+            string url3 = System.IO.Directory.GetCurrentDirectory();
+            string url4 = Environment.CurrentDirectory;
             try
             {
                 using(var stream = new MemoryStream())
                 {
-                    RegisteredObjects.AddConnection(typeof(JsonDataConnection));
+                    //RegisteredObjects.AddConnection(typeof(JsonDataConnection));
                     string webRootPath = _hostingEnvironment.WebRootPath;
-                    string reportPath = (webRootPath + @"\App_Data\" + "Resolution.frx");
+                    string reportPath = (webRootPath + @"\App_Data\" + "Resolution2.frx");
                     Config.WebMode = true;
                     using(var report = new Report())
                     {
@@ -74,10 +70,10 @@ namespace Fast_Report_Web_Api_First.Controllers
                         (report.FindObject(dataBandName) as DataBand).DataSource = dsb;
 
                         report.Dictionary.RegisterData(GetResolution(), "Resolution", true);
-                        PDFExport pdf = new PDFExport
+                        PDFSimpleExport pdf = new PDFSimpleExport
                         {
-                            AllowCopy = true,
-                            AllowPrint = true,
+                            //AllowCopy = true,
+                            //AllowPrint = true,
                             Author = "germes.lc",
                         };
                         report.Prepare();
@@ -96,12 +92,13 @@ namespace Fast_Report_Web_Api_First.Controllers
         private DataTable GetData()
         {
             DataTable resultData = new DataTable();
-            resultData.Columns.Add("Persons", typeof(string));
+            resultData.Columns.Add("Persons", typeof(string));  
             resultData.Columns.Add("Message", typeof(string));
             resultData.Columns.Add("Control", typeof(string));
             resultData.Columns.Add("DeadLine", typeof(DateTime));
-            resultData.Rows.Add("<b>Баходиров А.А</b>,Каюмов Т.А", "В срочном порятке подготовить отчет в текстовом и в табличной форме для доклада !", "Баходиров А.А", DateTime.Now);
-            resultData.Rows.Add("<b>Каюмов Т.А</b>, Баходиров А.А", "Прошу обеспечить ознакомление каждого сотрутника компании под роспись с содержанием данного документа !", "Баходиров А.А", DateTime.Now.AddDays(1));
+            resultData.Rows.Add("<b>Баходиров А.А</b>,Каюмов Т.А", "<b>В срочном порятке подготовить отчет в текстовом и в табличной форме для доклада !</b>", "Баходиров А.А", DateTime.Now);
+            resultData.Rows.Add("<b>Каюмов Т.А</b>, Баходиров А.А", "<b>Прошу обеспечить ознакомление каждого сотрутника компании под роспись с содержанием данного документа !</b>", "Баходиров А.А", DateTime.Now.AddDays(1));
+            resultData.Rows.Add(string.Empty, "<b>Прошу обеспечить ознакомление каждого сотрутника компании</b>", DateTime.Now);
             //for(int i = 3; i <= 10; i++)
             //{
             //    resultData.Rows.Add("MyPersons" + i, "MyMessage" + i, "ControllerName" + i, DateTime.Now.AddDays(i));
@@ -120,7 +117,7 @@ namespace Fast_Report_Web_Api_First.Controllers
                 {
                     using (var dataSet = new DataSet())
                     {
-                        RegisteredObjects.AddConnection(typeof(JsonDataConnection));
+                        //RegisteredObjects.AddConnection(typeof(JsonDataConnection));
                         string webRootPath = _hostingEnvironment.WebRootPath;
                         string reportPath = (webRootPath + @"\App_Data\" + "Simple List.frx");
                         Config.WebMode = true;
@@ -138,10 +135,10 @@ namespace Fast_Report_Web_Api_First.Controllers
                             report.Load(reportPath);
                            // report.RegisterData(dataSet);
                             report.Dictionary.RegisterData(Person(), "Person", true);
-                            PDFExport pdf = new PDFExport
+                            PDFSimpleExport pdf = new PDFSimpleExport
                             {
-                                AllowCopy = true,
-                                AllowPrint = true,
+                                //AllowCopy = true,
+                                //AllowPrint = true,
                                 Author = "germes.lc",
                             };
                             //RTFExport word = new RTFExport()

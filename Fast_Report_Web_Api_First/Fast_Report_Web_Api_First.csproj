@@ -5,11 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FastReport.Compat" Version="2021.2.10" />
     <PackageReference Include="FastReport.Data.Json" Version="2020.4.5" />
     <PackageReference Include="FastReport.Net.Demo" Version="2021.1.20" />
     <PackageReference Include="FastReport.OpenSource" Version="2020.3.1" />
     <PackageReference Include="FastReport.OpenSource.Data.Json" Version="2020.3.1" />
-    <PackageReference Include="FastReport.OpenSource.Export.PdfSimple" Version="2020.3.1" />
+    <PackageReference Include="FastReport.OpenSource.Export.PdfSimple" Version="2020.3.4" />
     <PackageReference Include="FastReport.OpenSource.Web" Version="2020.3.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1">
       <PrivateAssets>all</PrivateAssets>
